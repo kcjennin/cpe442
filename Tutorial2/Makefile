@@ -1,55 +1,25 @@
+TARGET=sobel
+
 CC=gcc
 CXX=g++
+LDFLAGS= `pkg-config --libs --cflags opencv4`
+CFLAGS=-g -Wall -Werror -O0 `pkg-config --libs --cflags opencv4`
 
-TARGET_EXEC ?= a.out
+OBJ= sobel.o
+DEPS=
 
-BUILD_DIR ?= ./bin
-SRC_DIRS ?= ./src
-H_DIR ?= ./include
+all: $(TARGET)
 
-LDIR ?= ./lib 
-LDFLAGS += -L$(LDIR) $(OPENCV)
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
-OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
+%.o: %.cpp $(DEPS)
+	$(CXX) -c -o $@ $< $(CFLAGS)
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+$(TARGET): $(OBJ)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-CPPFLAGS ?= $(INC_FLAGS) -I$(H_DIR) $(OPENCV) -MMD -MP -g -Wall -Werror -O0
-
-OPENCV ?= `pkg-config --libs --cflags opencv4`
-
-
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
-	cp $(BUILD_DIR)/$(TARGET_EXEC) ./exec
-
-# assembly
-$(BUILD_DIR)/%.s.o: %.s
-	$(MKDIR_P) $(dir $@)
-	$(AS) $(ASFLAGS) -c $< -o $@
-
-# c source
-$(BUILD_DIR)/%.c.o: %.c
-	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
-
-# c++ source
-$(BUILD_DIR)/%.cpp.o: %.cpp
-	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-
-
-.PHONY: clean run
+.PHONY: clean
 
 clean:
-	$(RM) -r $(BUILD_DIR)
-
-run:
-	$(BUILD_DIR)/$(TARGET_EXEC)
-
--include $(DEPS)
-
-MKDIR_P ?= mkdir -p
+	rm *.o $(TARGET)
