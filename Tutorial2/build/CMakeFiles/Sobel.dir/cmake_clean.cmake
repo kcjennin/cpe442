@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Sobel.dir/main.cpp.o"
+  "CMakeFiles/Sobel.dir/sobel.cpp.o"
   "Sobel"
   "Sobel.pdb"
 )

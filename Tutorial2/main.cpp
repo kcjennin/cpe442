@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char** argv) {
     string path;
     if (argc == 1)
-        path = "Chickens.mp4";
+        path = "/home/kyle/cpe442/Tutorial2/data/Chickens.mp4";
     else if (argc == 2)
         path = argv[1];
     else

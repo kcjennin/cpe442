@@ -7,7 +7,7 @@ enable_testing()
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(Sobel main.cpp)
+add_executable(Sobel main.cpp sobel.cpp)
 
 target_link_libraries(Sobel ${OpenCV_LIBS})
 

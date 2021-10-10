@@ -547,6 +547,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+sobel.o: sobel.cpp.o
+
+.PHONY : sobel.o
+
+# target to build an object file
+sobel.cpp.o:
+	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/sobel.cpp.o
+.PHONY : sobel.cpp.o
+
+sobel.i: sobel.cpp.i
+
+.PHONY : sobel.i
+
+# target to preprocess a source file
+sobel.cpp.i:
+	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/sobel.cpp.i
+.PHONY : sobel.cpp.i
+
+sobel.s: sobel.cpp.s
+
+.PHONY : sobel.s
+
+# target to generate assembly for a file
+sobel.cpp.s:
+	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/sobel.cpp.s
+.PHONY : sobel.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -590,6 +617,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... sobel.o"
+	@echo "... sobel.i"
+	@echo "... sobel.s"
 .PHONY : help
 
 

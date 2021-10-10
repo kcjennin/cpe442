@@ -858,12 +858,12 @@ CMakeFiles/NightlyMemoryCheck.dir/clean:
 CMakeFiles/Sobel.dir/all:
 	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/depend
 	$(MAKE) -f CMakeFiles/Sobel.dir/build.make CMakeFiles/Sobel.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kyle/cpe442/Tutorial2/build/CMakeFiles --progress-num=1,2 "Built target Sobel"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/kyle/cpe442/Tutorial2/build/CMakeFiles --progress-num=1,2,3 "Built target Sobel"
 .PHONY : CMakeFiles/Sobel.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Sobel.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kyle/cpe442/Tutorial2/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kyle/cpe442/Tutorial2/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Sobel.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/kyle/cpe442/Tutorial2/build/CMakeFiles 0
 .PHONY : CMakeFiles/Sobel.dir/rule

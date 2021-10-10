@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/kyle/cpe442/Tutorial2/main.cpp" "/home/kyle/cpe442/Tutorial2/build/CMakeFiles/Sobel.dir/main.cpp.o"
+  "/home/kyle/cpe442/Tutorial2/sobel.cpp" "/home/kyle/cpe442/Tutorial2/build/CMakeFiles/Sobel.dir/sobel.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
