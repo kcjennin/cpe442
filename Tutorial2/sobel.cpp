@@ -1,12 +1,20 @@
-#include <opencv2/opencv.hpp>
-#include <iostream>
+/**
+ * @file sobel.cpp
+ * @author Kyle Jennings (kcjennin@calpoly.edu)
+ * @brief 
+ * @version 0.1
+ * @date 2021-10-09
+ */
 
-using namespace cv;
-using namespace std;
+#include "sobel.hpp"
 
-enum Color { BLUE, GREEN, RED };
-
-void imgToGray(Mat3b *src, Mat1b *dst)
+/**
+ * @brief converts an image to grayscale using REC 601
+ * 
+ * @param src color image
+ * @param dst grayscale image
+ */
+void Sobel::imgToGray(Mat3b *src, Mat1b *dst)
 {
     Mat3b src_ = *src;
     Mat1b dst_ = *dst;
@@ -27,7 +35,13 @@ void imgToGray(Mat3b *src, Mat1b *dst)
 
 }
 
-void grayToSobel(Mat1b *src, Mat1b *dst)
+/**
+ * @brief takes a gray scale image and performs a sobel operation on it
+ * 
+ * @param src grayscale image
+ * @param dst sobel image
+ */
+void Sobel::grayToSobel(Mat1b *src, Mat1b *dst)
 {
     Mat1b src_ = *src;
     Mat1b dst_ = *dst;
@@ -60,42 +74,4 @@ void grayToSobel(Mat1b *src, Mat1b *dst)
             dst_(row, col) = (char) (total);
         }
     }
-}
-
-int main(int argc, char **argv)
-{
-    string path;
-    if (argc == 1)
-        path = "Chickens.mp4";
-    else if (argc == 2)
-        path = argv[1];
-    else
-    {
-        cout << "usage: sobel [filename]" << endl;
-        exit(1);
-    }
-    
-    VideoCapture cap(path);
-    Mat3b img;
-
-    while (true)
-    {
-        cap.read(img);
-        if(img.empty())
-        {
-            cerr << "End of video." << endl;
-            exit(0);
-        }
-
-        Mat1b grayImg = Mat1b(img.rows, img.cols);
-        Mat1b sobelImg = Mat1b(img.rows, img.cols);
-        
-        imgToGray(&img, &grayImg);
-        grayToSobel(&grayImg, &sobelImg);
-        
-        imshow("Image", sobelImg);
-        waitKey(1);
-    }
-
-    
 }

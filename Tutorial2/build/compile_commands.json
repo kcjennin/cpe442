@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/kyle/cpe442/Tutorial2/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -isystem /usr/local/include/opencv4  -g   -o CMakeFiles/Sobel.dir/main.cpp.o -c /home/kyle/cpe442/Tutorial2/main.cpp",
+  "file": "/home/kyle/cpe442/Tutorial2/main.cpp"
+}
+]
