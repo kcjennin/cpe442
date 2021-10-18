@@ -1,4 +1,4 @@
-TARGET = Sobel_Threaded
+TARGET = sobel.out
 
 CC = g++
 CFLAGS = -g -Wall -O0
