@@ -75,36 +75,67 @@ void Sobel::imgToGrayLimited(Mat3b *src, Mat1b *dst, int startRow, int stopRow)
  */
 void Sobel::grayToSobel(Mat1b *src, Mat1b *dst)
 {
+    int row, col, stride;
+    int16_t sx, sy, total;
     Mat1b src_ = *src;
     Mat1b dst_ = *dst;
 
     Mat1s kernelX = (Mat1s(3,3) << -1, 0, +1, -2, 0, +2, -1, 0, +1);
     Mat1s kernelY = (Mat1s(3,3) << +1, +2, +1, 0, 0, 0, -1, -2, -1);
 
-    for(int row=1; row<src_.rows-1; row++)
+    
+    stride = src_.step;
+    len_col = src_.cols / 8;
+    for(row=1; row<src_.rows-1; row++)
     {
-        for(int col=1; col<src_.cols-1; col++)
+        /* do the first 7 */
+        for (col=1; col<8; col++)
         {
-            short sx = 0;
-            short sy = 0;
-            short total = 0;
+            sx = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row)*stride + (col-1)] + src_.data[(row+1)*stride + (col-1)]
+                - src_.data[(row-1)*stride + (col+1)] - 2*src_.data[(row)*stride + (col+1)] - src_.data[(row+1)*stride + (col+1)];
             
+            sy = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row-1)*stride + (col)] + src_.data[(row-1)*stride + (col+1)]
+                - src_.data[(row+1)*stride + (col-1)] - 2*src_.data[(row+1)*stride + (col)] - src_.data[(row+1)*stride + (col+1)];
 
-            for(int i=-1; i<=1; i++)
-            {
-                for(int j=-1; j<=1; j++)
-                {
-                    sx += src_(row + i, col + j) * kernelX(i + 1, j + 1);
-                    sy += src_(row + i, col + j) * kernelY(i + 1, j + 1);
-                }
-            }
             sx = sx < 0 ? sx * -1 : sx;
             sy = sy < 0 ? sy * -1 : sy;
 
             total = (sx + sy) > 255 ? 255 : sx + sy;
             
-            dst_(row, col) = (char) (total);
+            dst_.data[row*stride + col] = (int8_t) total;
         }
+        /* do the middle bit */
+        for(col=8; col<src_.cols-8; col+=8)
+        {
+            sx = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row)*stride + (col-1)] + src_.data[(row+1)*stride + (col-1)]
+                - src_.data[(row-1)*stride + (col+1)] - 2*src_.data[(row)*stride + (col+1)] - src_.data[(row+1)*stride + (col+1)];
+            
+            sy = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row-1)*stride + (col)] + src_.data[(row-1)*stride + (col+1)]
+                - src_.data[(row+1)*stride + (col-1)] - 2*src_.data[(row+1)*stride + (col)] - src_.data[(row+1)*stride + (col+1)];
+
+            sx = sx < 0 ? sx * -1 : sx;
+            sy = sy < 0 ? sy * -1 : sy;
+
+            total = (sx + sy) > 255 ? 255 : sx + sy;
+            
+            dst_.data[row*stride + col] = (int8_t) total;
+        }
+        /* do the end 7 */
+        for(col=src_.cols-8; col<src_.cols-1; col++)
+        {
+            sx = src_.data[(row-1)*stride + (col-1)] + src_.data[(row)*stride + (col-1)] + src_.data[(row+1)*stride + (col-1)]
+                - src_.data[(row-1)*stride + (col+1)] - src_.data[(row)*stride + (col+1)] - src_.data[(row+1)*stride + (col+1)];
+            
+            sy = src_.data[(row-1)*stride + (col-1)] + src_.data[(row-1)*stride + (col)] + src_.data[(row-1)*stride + (col+1)]
+                - src_.data[(row+1)*stride + (col-1)] - src_.data[(row+1)*stride + (col)] - src_.data[(row+1)*stride + (col+1)];
+
+            sx = sx < 0 ? sx * -1 : sx;
+            sy = sy < 0 ? sy * -1 : sy;
+
+            total = (sx + sy) > 255 ? 255 : sx + sy;
+            
+            dst_.data[row*stride + col] = (int8_t) total;
+        }    
     }
 }
 
