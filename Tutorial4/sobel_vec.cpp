@@ -181,38 +181,6 @@ void Sobel::grayToSobel(Mat1b *src, Mat1b *dst)
             
             dst_.data[(row)*stride + col] = (int8_t) total;
         }
-        /* do the middle bit */
-        for(col=8; col<src_.cols-8; col+=8)
-        {
-            sx = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row)*stride + (col-1)] + src_.data[(row+1)*stride + (col-1)]
-                - src_.data[(row-1)*stride + (col+1)] - 2*src_.data[(row)*stride + (col+1)] - src_.data[(row+1)*stride + (col+1)];
-            
-            sy = src_.data[(row-1)*stride + (col-1)] + 2*src_.data[(row-1)*stride + (col)] + src_.data[(row-1)*stride + (col+1)]
-                - src_.data[(row+1)*stride + (col-1)] - 2*src_.data[(row+1)*stride + (col)] - src_.data[(row+1)*stride + (col+1)];
-
-            sx = sx < 0 ? sx * -1 : sx;
-            sy = sy < 0 ? sy * -1 : sy;
-
-            total = (sx + sy) > 255 ? 255 : sx + sy;
-            
-            dst_.data[row*stride + col] = (int8_t) total;
-        }
-        /* do the end 7 */
-        for(col=src_.cols-8; col<src_.cols-1; col++)
-        {
-            sx = src_.data[(row-1)*stride + (col-1)] + src_.data[(row)*stride + (col-1)] + src_.data[(row+1)*stride + (col-1)]
-                - src_.data[(row-1)*stride + (col+1)] - src_.data[(row)*stride + (col+1)] - src_.data[(row+1)*stride + (col+1)];
-            
-            sy = src_.data[(row-1)*stride + (col-1)] + src_.data[(row-1)*stride + (col)] + src_.data[(row-1)*stride + (col+1)]
-                - src_.data[(row+1)*stride + (col-1)] - src_.data[(row+1)*stride + (col)] - src_.data[(row+1)*stride + (col+1)];
-
-            sx = sx < 0 ? sx * -1 : sx;
-            sy = sy < 0 ? sy * -1 : sy;
-
-            total = (sx + sy) > 255 ? 255 : sx + sy;
-            
-            dst_.data[row*stride + col] = (int8_t) total;
-        }    
     }
 }
 
