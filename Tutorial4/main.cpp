@@ -72,10 +72,10 @@ void multithread_main(string path)
             threads[i].join();
             
         /* Convert to sobel */
-        threads[THREAD1] = thread(Sobel::grayToSobelLimited, &imgGray, &imgSobel, 1, midPoint);
+        threads[THREAD1] = thread(Sobel::grayToSobelLimited, &imgGray, &imgSobel, 0, midPoint);
         threads[THREAD2] = thread(Sobel::grayToSobelLimited, &imgGray, &imgSobel, midPoint, 2*midPoint);
         threads[THREAD3] = thread(Sobel::grayToSobelLimited, &imgGray, &imgSobel, 2*midPoint, 3*midPoint);
-        Sobel::grayToSobelLimited(&imgGray, &imgSobel, 3*midPoint, imgGray.rows-1);
+        Sobel::grayToSobelLimited(&imgGray, &imgSobel, 3*midPoint, imgGray.rows);
         for(i=0; i<3; i++)
             threads[i].join();
 

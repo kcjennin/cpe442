@@ -23,6 +23,12 @@ struct sobelArgs
     int stopRow;
 };
 
+struct __attribute__((packed)) quad_word
+{
+    unsigned long long bgr_upper;
+    unsigned long long bgr_lower;
+};
+
 class Sobel
 {
     public:
