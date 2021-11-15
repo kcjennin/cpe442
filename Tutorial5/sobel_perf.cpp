@@ -310,102 +310,111 @@ void Sobel::grayToSobelLimited(Mat1b *src, Mat1b *dst, int startRow, int stopRow
         }
         for(col=4; col<src_.cols-4; col+=8)
         {
+            uint64_t storage_int;
             /* -1, -1 */
-            storage[0] = src_.data[(row-1)*stride + col-1+0];
-            storage[1] = src_.data[(row-1)*stride + col-1+1];
-            storage[2] = src_.data[(row-1)*stride + col-1+2];
-            storage[3] = src_.data[(row-1)*stride + col-1+3];
-            storage[4] = src_.data[(row-1)*stride + col-1+4];
-            storage[5] = src_.data[(row-1)*stride + col-1+5];
-            storage[6] = src_.data[(row-1)*stride + col-1+6];
-            storage[7] = src_.data[(row-1)*stride + col-1+7];
+            storage_int = *(uint64_t *) &src_.data[(row-1)*stride + col-1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             top.val[0] = vld1q_s16(storage);
             left.val[0] = vld1q_s16(storage);
 
             /* 0, -1 */
-            storage[0] = src_.data[(row-1)*stride + col+0];
-            storage[1] = src_.data[(row-1)*stride + col+1];
-            storage[2] = src_.data[(row-1)*stride + col+2];
-            storage[3] = src_.data[(row-1)*stride + col+3];
-            storage[4] = src_.data[(row-1)*stride + col+4];
-            storage[5] = src_.data[(row-1)*stride + col+5];
-            storage[6] = src_.data[(row-1)*stride + col+6];
-            storage[7] = src_.data[(row-1)*stride + col+7];
+            storage_int = *(uint64_t *) &src_.data[(row-1)*stride + col];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             top.val[1] = vld1q_s16(storage);
 
             /* 1, -1 */
-            storage[0] = src_.data[(row-1)*stride + col+1+0];
-            storage[1] = src_.data[(row-1)*stride + col+1+1];
-            storage[2] = src_.data[(row-1)*stride + col+1+2];
-            storage[3] = src_.data[(row-1)*stride + col+1+3];
-            storage[4] = src_.data[(row-1)*stride + col+1+4];
-            storage[5] = src_.data[(row-1)*stride + col+1+5];
-            storage[6] = src_.data[(row-1)*stride + col+1+6];
-            storage[7] = src_.data[(row-1)*stride + col+1+7];
+            storage_int = *(uint64_t *) &src_.data[(row-1)*stride + col+1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             top.val[2] = vld1q_s16(storage);
             right.val[0] = vld1q_s16(storage);
 
             /* -1, 0 */
-            storage[0] = src_.data[(row)*stride + col-1+0];
-            storage[1] = src_.data[(row)*stride + col-1+1];
-            storage[2] = src_.data[(row)*stride + col-1+2];
-            storage[3] = src_.data[(row)*stride + col-1+3];
-            storage[4] = src_.data[(row)*stride + col-1+4];
-            storage[5] = src_.data[(row)*stride + col-1+5];
-            storage[6] = src_.data[(row)*stride + col-1+6];
-            storage[7] = src_.data[(row)*stride + col-1+7];
+            storage_int = *(uint64_t *) &src_.data[(row)*stride + col-1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             left.val[1] = vld1q_s16(storage);
 
             /* 1, 0 */
-            storage[0] = src_.data[(row)*stride + col+1+0];
-            storage[1] = src_.data[(row)*stride + col+1+1];
-            storage[2] = src_.data[(row)*stride + col+1+2];
-            storage[3] = src_.data[(row)*stride + col+1+3];
-            storage[4] = src_.data[(row)*stride + col+1+4];
-            storage[5] = src_.data[(row)*stride + col+1+5];
-            storage[6] = src_.data[(row)*stride + col+1+6];
-            storage[7] = src_.data[(row)*stride + col+1+7];
+            storage_int = *(uint64_t *) &src_.data[(row)*stride + col+1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             right.val[1] = vld1q_s16(storage);
 
             /* -1, 1 */
-            storage[0] = src_.data[(row+1)*stride + col-1+0];
-            storage[1] = src_.data[(row+1)*stride + col-1+1];
-            storage[2] = src_.data[(row+1)*stride + col-1+2];
-            storage[3] = src_.data[(row+1)*stride + col-1+3];
-            storage[4] = src_.data[(row+1)*stride + col-1+4];
-            storage[5] = src_.data[(row+1)*stride + col-1+5];
-            storage[6] = src_.data[(row+1)*stride + col-1+6];
-            storage[7] = src_.data[(row+1)*stride + col-1+7];
+            storage_int = *(uint64_t *) &src_.data[(row+1)*stride + col-1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             left.val[2] = vld1q_s16(storage);
             bottom.val[0] = vld1q_s16(storage);
 
             /* 0, 1 */
-            storage[0] = src_.data[(row+1)*stride + col+0];
-            storage[1] = src_.data[(row+1)*stride + col+1];
-            storage[2] = src_.data[(row+1)*stride + col+2];
-            storage[3] = src_.data[(row+1)*stride + col+3];
-            storage[4] = src_.data[(row+1)*stride + col+4];
-            storage[5] = src_.data[(row+1)*stride + col+5];
-            storage[6] = src_.data[(row+1)*stride + col+6];
-            storage[7] = src_.data[(row+1)*stride + col+7];
+            storage_int = *(uint64_t *) &src_.data[(row+1)*stride + col];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             bottom.val[1] = vld1q_s16(storage);
 
             /* 1, 1 */
-            storage[0] = src_.data[(row+1)*stride + col+1+0];
-            storage[1] = src_.data[(row+1)*stride + col+1+1];
-            storage[2] = src_.data[(row+1)*stride + col+1+2];
-            storage[3] = src_.data[(row+1)*stride + col+1+3];
-            storage[4] = src_.data[(row+1)*stride + col+1+4];
-            storage[5] = src_.data[(row+1)*stride + col+1+5];
-            storage[6] = src_.data[(row+1)*stride + col+1+6];
-            storage[7] = src_.data[(row+1)*stride + col+1+7];
+            storage_int = *(uint64_t *) &src_.data[(row+1)*stride + col+1];
+            storage[0] = 0xff & (storage_int >> 7*8);
+            storage[1] = 0xff & (storage_int >> 6*8);
+            storage[2] = 0xff & (storage_int >> 5*8);
+            storage[3] = 0xff & (storage_int >> 4*8);
+            storage[4] = 0xff & (storage_int >> 3*8);
+            storage[5] = 0xff & (storage_int >> 2*8);
+            storage[6] = 0xff & (storage_int >> 1*8);
+            storage[7] = 0xff & (storage_int);
 
             bottom.val[2] = vld1q_s16(storage);
             right.val[2] = vld1q_s16(storage);
