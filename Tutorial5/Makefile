@@ -1,8 +1,9 @@
 TARGET = sobel.out
 
 CC = gcc
-CFLAGS = -Wall -O0 -I${PAPI_DIR}/include -ggdb
-LDFLAGS = -L${PAPI_DIR}/lib -lpthread -lstdc++
+CFLAGS = -Wall -O0
+PERFFLAGS = -ggdb
+LDFLAGS = -lpthread -lstdc++
 
 OPENCV_INC = `pkg-config --cflags opencv4`
 OPENCV_LD = `pkg-config --libs opencv4`
@@ -13,10 +14,10 @@ DEPS = $(shell find -name "*.hpp" -or -name "*.h")
 all: $(TARGET)
 
 %.cpp.o: %.cpp $(DEPS)
-	$(CC) $(CFLAGS) $(OPENCV_INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(PERFFLAGS) $(OPENCV_INC) -c -o $@ $<
 
 %.c.o: %.c $(DEPS)
-	$(CC) $(CFLAGS) $(OPENCV_INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(PERFFLAGS) $(OPENCV_INC) -c -o $@ $<
 
 $(TARGET): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS) $(OPENCV_LD)
@@ -24,7 +25,7 @@ $(TARGET): $(OBJ)
 .PHONY: clean run perf
 
 clean:
-	rm -rf *.o $(TARGET) papi_hl_output perf.data
+	rm -rf *.o $(TARGET) perf.data
 
 run: $(TARGET)
 	./$(TARGET) data/3sec.mp4
