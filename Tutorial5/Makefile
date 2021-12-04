@@ -32,4 +32,4 @@ run: $(TARGET)
 
 perf: $(TARGET)
 	rm -rf perf.data
-	perf record -e cpu-clock:pp,cache-misses:pp,branch-misses:pp ./sobel.out data/3sec.mp4
+	perf record -e cpu-clock,cache-misses,branch-misses ./sobel.out data/3sec.mp4
